@@ -13,9 +13,22 @@ class Registry(object):
 
 
 class Service(object):
-    def __init__(self):
-        self._id = self.__class__
+    def __init__(self, description):
+        self._id = self.__class__.__name__
+        self._description = description
 
     @property
     def Id(self):
         return self._id
+
+    @property
+    def Description(self):
+        return self._id
+
+class InvocationContext(object):
+      def __init__(self, userId):
+          self._user_id = userId
+
+      @property
+      def UserId(self):
+          return self._user_id

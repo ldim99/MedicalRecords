@@ -3,19 +3,28 @@ from . import service_gateway
 
 
 class PatientsService(services.service_gateway.Service):
-    def findPatient(self, patientName):
-        es = service_gateway.Registry.lookupService('EntityService')
-        patient = es.lookup('Patient', patientName)
-        return patient
 
-    def updatePatient(self, patient):
-        es = service_gateway.Registry.lookupService('EntityService')
-        es.update('Patient', patient)
+    def __init__(self):
+        super(PatientsService,self).__init__('Informational service for patients')
 
-    def findPatientsHistory(self, patientId):
-        ps = service_gateway.Registry.lookupService('EnitityService')
-        record = ps.lookup('PatientsHistory', patientId)
-        return record
+    def findPatient(self, ctx, patientName):
+        es = service_gateway.Registry.lookupService('EntityService')
+        patient = es.lookup('Patient', 'Name', patientName)
+        if ctx.UserId == patient.Id:
+           return patient
+        return None
+
+    def updatePatient(self, ctx, patient):
+        if ctx.UserId == patient.Id:
+            es = service_gateway.Registry.lookupService('EntityService')
+            es.update('Patient', patient)
+
+    def findPatientHistory(self, ctx, patientId):
+        if ctx.UserId != patientId:
+            return None
+        es = service_gateway.Registry.lookupService('EnitityService')
+        history = es.lookup('PatientHistory', 'Id', patientId)
+        return history
 
 
 service_gateway.Registry.registerService(PatientsService())

@@ -1,28 +1,70 @@
 from . import person
+import pprint
 
 
 class Patient(person.Person):
-    def __init__(self, registration_date, doctor_id):
-        super(Patient, self).__init__()
-        self._registartion_date = registration_date
+    def __init__(self, name=None, dob=None, gender=None, height=None, weight=None, doctor_id=None):
+        super(Patient, self).__init__(name, dob, gender)
         self._doctorId = doctor_id
+        self._height = height
+        self._weight = weight
         self._preconditions = []
         self._allergies = []
         self._medications = []
 
-        @property
-        def Preconditions(self):
-            return self._preconditions
+    @property
+    def Height(self):
+        return self._height
 
-        @property
-        def Allergies(self):
-            return self._allergies
+    @Height.setter
+    def Height(self, val):
+        self._height = val
 
-        @property
-        def Medications(self):
-            return self._medications
+    @property
+    def Weight(self):
+        return self._weight
 
-        @property
-        def DoctorId(self):
-            return self._doctorId
+    @Weight.setter
+    def Weight(self, val):
+        self._weight = val
 
+    @property
+    def DoctorId(self):
+        return self._doctorId
+
+    @DoctorId.setter
+    def DoctorId(self, val):
+        self._doctorId = val
+
+    @property
+    def Preconditions(self):
+        return self._preconditions
+
+    @Preconditions.setter
+    def Preconditions(self, val):
+        self._preconditions = val
+
+    @property
+    def Allergies(self):
+        return self._allergies
+
+    @Allergies.setter
+    def Allergies(self, val):
+        self._allergies = val
+
+    @property
+    def Medications(self):
+        return self._medications
+
+    @Medications.setter
+    def Medications(self, val):
+        self._medications = val
+
+    def __repr__(self):
+        return '{person}\n' \
+               'Preconditions: {preconditions}\n' \
+               'Allergies: {allergies}\n' \
+               'Medications : {medications}'.format(person=super(Patient, self).__repr__(),
+                                                    preconditions=self._preconditions,
+                                                    allergies=self._allergies,
+                                                    medications=self._medications)

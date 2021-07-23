@@ -1,0 +1,7 @@
+Medical Records Manager
+
+Overal goal of this project is to provide interface for doctors to be able manage patient visit records
+
+Its main entities are Doctors , Patients and Records representing historical visitations , doctor notes and diagnosises
+
+It support following opea

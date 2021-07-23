@@ -4,33 +4,35 @@ from . import service_gateway
 
 class DoctorsService(services.service_gateway.Service):
 
-    def findPatient(self, doctorId, patientName):
-        ps = service_gateway.Registry.lookupService('EntityService')
-        patient = ps.lookup('Patient', patientName)
-        if patient and patient.DoctorId == doctorId:
+    def __init__(self):
+        super(DoctorsService,self).__init__('Informational service for doctors')
+
+    def findPatient(self, ctx, patientId):
+        es = service_gateway.Registry.lookupService('EntityService')
+        patient = es.lookup(ctx, 'Patient', 'Id', patientId)
+        if patient and patient.DoctorId == ctx.UserId:
             return patient
-        else:
-            return None
+        return None
 
-    def updatePatient(self, doctorId, patient):
-        ps = service_gateway.Registry.lookupService('EntityService')
-        if patient.DoctorId == doctorId:
-            ps.update('Patient', patient)
+    def updatePatient(self, ctx, patient):
+        es = service_gateway.Registry.lookupService('EntityService')
+        cur_patient = es.lookup(ctx, 'Patient', 'Id', patient.Id)
+        if cur_patient.DoctorId == ctx.UserId:
+            es.update('Patient', patient)
 
-    def findPatientsHistory(self, doctorId, patientId):
-        patient = self.findPatient(patientId)
-        if patient and patient.DoctorId == doctorId:
-            ps = service_gateway.Registry.lookupService('EntityService')
-            history = ps.lookup('PatientsHistory', patientId)
+    def findPatientHistory(self, ctx, patientId):
+        patient = self.findPatient(ctx, patientId)
+        if patient and patient.DoctorId == ctx.UserId:
+            es = service_gateway.Registry.lookupService('EntityService')
+            history = es.lookup(ctx, 'PatientHistory', 'Id', patientId)
             return history
-        else:
-            return None
+        return None
 
-    def updatePatientsHistory(self, doctorId, patientId, history):
-        ps = service_gateway.Registry.lookupService('EntityService')
-        patient = self.findPatient(patientId)
-        if patient and patient.DoctorId == doctorId:
-            ps.update('PatientsHistory', history)
+    def updatePatientHistory(self, ctx, history):
+        patient = self.findPatient(ctx, history.Id)
+        if patient:
+            es = service_gateway.Registry.lookupService('EntityService')
+            es.store(ctx, history)
 
 
 service_gateway.Registry.registerService(DoctorsService())
