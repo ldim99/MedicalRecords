@@ -1,4 +1,3 @@
-import uuid
 from . import record
 
 
@@ -6,7 +5,7 @@ from . import record
 class Person(record.HistoricalRecord):
 
     def __init__(self, name, dob, gender):
-        super(Person, self).__init__(str(uuid.uuid4()))
+        super(Person, self).__init__()
         self._name = name
         self._dob = dob
         self._gender = gender
@@ -36,4 +35,5 @@ class Person(record.HistoricalRecord):
         self._gender = val
 
     def __repr__(self):
-        return 'Name: {name} Dob: {dob} Gender: {gender}'.format(name=self.Name, dob=self.DateOfBirth, gender=self.Gender)
+        return 'Name: {name} Dob: {dob} Gender: {gender}'.\
+            format(name=self.Name, dob=self.DateOfBirth, gender=self.Gender)

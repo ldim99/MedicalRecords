@@ -1,7 +1,18 @@
 Medical Records Manager
 
-Overal goal of this project is to provide interface for doctors to be able manage patient visit records
+Overall goal of this project is to provide interface for patients and doctors to be able manage medical records and history of visits as well as being able to generate reports
 
-Its main entities are Doctors , Patients and Records representing historical visitations , doctor notes and diagnosises
+Main entities are doctors, patients and visit records includes doctor notes, diagnosises and medications as well as metrics taken during the visit - height, wieght and blood pressure
 
-It support following opea
+Project implemented as a group of microservices with common interface and registration:
+
+1. Patient Service with below API *:
+  - browsing patients information and medical history
+  - update patients information
+
+2. Doctor Services with below API *:
+   - browsing patients information and medical history
+   - update patients information and medical history
+
+* A level of doctor/patient isolaton is guranteed that patients and doctors will only be able to browse and edit information relevant to them
+

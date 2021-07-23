@@ -1,5 +1,4 @@
 from . import person
-import pprint
 
 
 class Patient(person.Person):
@@ -11,6 +10,10 @@ class Patient(person.Person):
         self._preconditions = []
         self._allergies = []
         self._medications = []
+
+    @property
+    def Indexes(self):
+        return ['Id','Name']
 
     @property
     def Height(self):
@@ -61,10 +64,10 @@ class Patient(person.Person):
         self._medications = val
 
     def __repr__(self):
-        return '{person}\n' \
+        return '{person} \n' \
                'Preconditions: {preconditions}\n' \
                'Allergies: {allergies}\n' \
                'Medications : {medications}'.format(person=super(Patient, self).__repr__(),
-                                                    preconditions=self._preconditions,
-                                                    allergies=self._allergies,
-                                                    medications=self._medications)
+                                                    preconditions=','.join(self._preconditions),
+                                                    allergies=','.join(self._allergies),
+                                                    medications=','.join(self._medications))

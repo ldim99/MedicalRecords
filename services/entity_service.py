@@ -1,7 +1,7 @@
 import services.service_gateway
 from . import service_gateway
 from collections import defaultdict
-
+from functools import partial
 
 class EntityService(services.service_gateway.Service):
 
@@ -9,22 +9,16 @@ class EntityService(services.service_gateway.Service):
         super(EntityService, self).__init__('Entity lookup service')
         self._backingStore = backingStore
 
-    def lookup(self, ctx, entityClass, lookupType, entityKey):
-        if lookupType == 'Id':
-            return self._backingStore.lookupById(entityClass, entityKey)
-        elif lookupType == 'Name':
-            return self._backingStore.lookupByName(entityClass, entityKey)
-        return None
+    def lookup(self, ctx, entityClass, index, entityKey):
+        return self._backingStore.lookupByIndex(entityClass, index, entityKey)
 
     def store(self, ctx, entity):
         self._backingStore.store(entity.__class__.__name__, entity)
 
 
 class BackingStore(object):
-    def lookupByName(self, entityType, enitityName):
-        raise NotImplemented()
 
-    def lookupById(self, entityType, enitityId):
+    def lookupByIndex(self, entityType, index, enitityId):
         raise NotImplemented()
 
     def store(self, entityType, enitity):
@@ -32,22 +26,18 @@ class BackingStore(object):
 
 
 class DictionaryBackingStore(BackingStore):
-    _entitiesById = defaultdict(dict)
-    _entitiesByName = defaultdict(dict)
+    _entitiesByIndex = defaultdict(partial(defaultdict,dict))
 
     def DictionaryBackingStore(self, content=None):
         pass
 
-    def lookupById(self, entityType, enitityId):
-        return self._entitiesById[entityType].get(enitityId)
-
-    def lookupByName(self, entityType, enitityName):
-        return self._entitiesByName[entityType].get(enitityName)
+    def lookupByIndex(self, entityType, index, enitityId):
+        return self._entitiesByIndex[entityType].get(index).get(enitityId)
 
     def store(self, entityType, entity):
-        self._entitiesById[entityType][entity.Id] = entity
-        if hasattr(entity,'Name'):
-           self._entitiesByName[entityType][entity.Name] = entity
+        indexes = entity.Indexes
+        for index in indexes:
+            self._entitiesByIndex[entityType][index][getattr(entity, index)] = entity
 
 
 service_gateway.Registry.registerService(EntityService(DictionaryBackingStore()))

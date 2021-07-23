@@ -2,6 +2,7 @@ import services.service_gateway
 from . import service_gateway
 
 
+# Provide CRU operations for patients
 class PatientsService(services.service_gateway.Service):
 
     def __init__(self):
@@ -9,7 +10,7 @@ class PatientsService(services.service_gateway.Service):
 
     def findPatient(self, ctx, patientName):
         es = service_gateway.Registry.lookupService('EntityService')
-        patient = es.lookup('Patient', 'Name', patientName)
+        patient = es.lookup(ctx, 'Patient', 'Name', patientName)
         if ctx.UserId == patient.Id:
            return patient
         return None
@@ -17,13 +18,13 @@ class PatientsService(services.service_gateway.Service):
     def updatePatient(self, ctx, patient):
         if ctx.UserId == patient.Id:
             es = service_gateway.Registry.lookupService('EntityService')
-            es.update('Patient', patient)
+            es.store(ctx, patient)
 
     def findPatientHistory(self, ctx, patientId):
         if ctx.UserId != patientId:
             return None
         es = service_gateway.Registry.lookupService('EnitityService')
-        history = es.lookup('PatientHistory', 'Id', patientId)
+        history = es.lookup(ctx, 'PatientHistory', 'PatientId', patientId)
         return history
 
 
