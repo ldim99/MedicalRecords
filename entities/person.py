@@ -1,7 +1,7 @@
 from . import record
 
 
-# a human being
+# A human being
 class Person(record.HistoricalRecord):
 
     def __init__(self, name, dob, gender):
@@ -35,5 +35,5 @@ class Person(record.HistoricalRecord):
         self._gender = val
 
     def __repr__(self):
-        return 'Name: {name} Dob: {dob} Gender: {gender}'.\
+        return 'Name: {name} Dob: {dob} Gender: {gender}'. \
             format(name=self.Name, dob=self.DateOfBirth, gender=self.Gender)

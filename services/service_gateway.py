@@ -1,5 +1,3 @@
-
-
 class Registry(object):
     _services = {}
 
@@ -25,10 +23,11 @@ class Service(object):
     def Description(self):
         return self._id
 
-class InvocationContext(object):
-      def __init__(self, userId):
-          self._user_id = userId
 
-      @property
-      def UserId(self):
-          return self._user_id
+class InvocationContext(object):
+    def __init__(self, userId):
+        self._user_id = userId
+
+    @property
+    def UserId(self):
+        return self._user_id

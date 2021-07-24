@@ -3,8 +3,9 @@ import datetime
 from entities import patient, doctor, record
 from services import service_gateway, entity_service, doctors_service, reporting_service
 
-class TestReportingService(TestCase):
-    def testPatientSummary(self):
+
+class ReportingServiceTest(TestCase):
+    def test_PatientSummary(self):
         es = entity_service.EntityService(entity_service.DictionaryBackingStore())
         service_gateway.Registry.registerService(es)
         ds = service_gateway.Registry.lookupService('DoctorsService')
@@ -17,7 +18,7 @@ class TestReportingService(TestCase):
         p1.Medications = ['Read a book twice a day']
 
         p2 = patient.Patient('Giuseppe ', datetime.date(1940, 1, 1), 'M', 100, 160, d.Id)
-        p2.Preconditions = ['Drunk']
+        p2.Preconditions = ['Heavy drinker']
         p2.Allergies = ['Salad']
         p2.Medications = ['Drink juice and water']
 
@@ -34,6 +35,7 @@ class TestReportingService(TestCase):
         visit.Weight = 60
         visit.Height = 80
         visit.BloodPressure = (120, 80)
+        visit.HeartRate = 80
         visit.Diagnosis = 'Headaches'
         visit.Treatment = 'Tyleon'
         visit.Notes = 'Wooden head'
@@ -47,6 +49,7 @@ class TestReportingService(TestCase):
         visit.Weight = 65
         visit.Height = 81
         visit.BloodPressure = (115, 75)
+        visit.HeartRate = 90
         visit.Diagnosis = 'Red Nose'
         visit.Treatment = 'Milk'
         visit.Notes = 'Too much drinking'

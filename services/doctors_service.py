@@ -2,7 +2,7 @@ import services.service_gateway
 from . import service_gateway
 
 
-# Provide CRU operations for doctors
+# As set of CRUD operations for doctors
 class DoctorsService(services.service_gateway.Service):
 
     def __init__(self):

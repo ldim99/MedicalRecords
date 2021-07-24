@@ -2,6 +2,7 @@ import uuid
 import datetime
 import bisect
 import json
+from pydoc import locate
 
 
 # Record with a particular creation time
@@ -34,43 +35,50 @@ class HistoricalRecord(object):
         return self.CreationTime < other.CreationTime
 
     def toDict(self):
-        return dict(
-            (k, getattr(self, k)) for k, v in
-            vars(self.__class__).items() if isinstance(v, property) and v.fset is not None if k[0].isupper())
-
-    def fromDict(self, d):
-        for k, v in d.items():
-            setattr(self, k, v)
-
-    def toJSON(self):
-        d = self.toDict()
+        d = dict((k, v.fget(self)) for k, v in
+                 ((m, getattr(self.__class__, m)) for m in dir(self) if m[0].isupper()) if
+                 isinstance(v, property) and v.fset is not None)
+        d['__type__'] = self.__module__ + '.' + self.__class__.__name__
         for k, v in d.items():
             if isinstance(v, (datetime.datetime, datetime.date)):
                 d[k] = v.isoformat()
-        return json.dumps(d)
+        return d
 
     @classmethod
-    def fromJSON(cls, jsonText):
-        d = json.loads(jsonText)
+    def fromDict(cls, d):
+        type = d.pop('__type__', None)
+        cls = locate(type)
+
         for k, v in d.items():
             if 'Time' in k:
                 d[k] = datetime.datetime.fromisoformat(v)
             elif 'Date' in k:
                 d[k] = datetime.datetime.fromisoformat(v).date()
+
         r = cls()
-        r.fromDict(d)
+        for k, v in d.items():
+            setattr(r, k, v)
         return r
+
+    def toJSON(self):
+        d = self.toDict()
+        return json.dumps(d)
+
+    @classmethod
+    def fromJSON(cls, jsonText):
+        d = json.loads(jsonText)
+        return cls.fromDict(d)
 
 
 # Records for a given patient
 class PatientRecord(HistoricalRecord):
-    def __init__(self, patientId):
+    def __init__(self, patientId=None):
         super(PatientRecord, self).__init__()
         self._patientId = patientId
 
     @property
     def Indexes(self):
-        return ['Id','PatientId']
+        return ['Id', 'PatientId']
 
     @property
     def PatientId(self):
@@ -83,10 +91,11 @@ class PatientRecord(HistoricalRecord):
 
 # Record of patient's visit with  diagnostic and treatment information
 class PatientVisit(PatientRecord):
-    def __init__(self, patientId):
+    def __init__(self, patientId=None):
         super(PatientVisit, self).__init__(patientId)
         self._height = None
         self._weight = None
+        self._heartRate = None
         self._bloodPressure = None
         self._diagnosis = None
         self._treatment = None
@@ -115,6 +124,14 @@ class PatientVisit(PatientRecord):
     @BloodPressure.setter
     def BloodPressure(self, val):
         self._bloodPressure = val
+
+    @property
+    def HeartRate(self):
+        return self._heartRate
+
+    @HeartRate.setter
+    def HeartRate(self, val):
+        self._heartRate = val
 
     @property
     def Diagnosis(self):
@@ -146,13 +163,15 @@ class PatientVisit(PatientRecord):
 
     def __repr__(self):
         return 'Date: {date}\n' \
-               'Height {height} in, Weight {weight} lbs, Blood Pressure {blooodPessure}, BMI={bmi:.2f}\n' \
+               'Height {height} in, Weight {weight} lbs \n' \
+               'Blood Pressure {blooodPessure} mm/Hg, Heart Rate {heartRate} bmp, BMI={bmi:.2f}\n' \
                'Diagnosis: {diagnosis}\n' \
                'Treatment: {treatment}\n' \
                'Notes: {notes}'.format(date=self.CreationTime.date(),
                                        height=self.Height,
                                        weight=self.Weight,
                                        blooodPessure='/'.join(map(str, self.BloodPressure)),
+                                       heartRate=self.HeartRate,
                                        bmi=self.BMI,
                                        diagnosis=self.Diagnosis,
                                        treatment=self.Treatment,
@@ -161,13 +180,17 @@ class PatientVisit(PatientRecord):
 
 # Patient's history record
 class PatientHistory(PatientRecord):
-    def __init__(self, patientId):
+    def __init__(self, patientId=None):
         super(PatientHistory, self).__init__(patientId)
         self._visits = []
 
     @property
     def Visits(self):
         return list(self._visits)
+
+    @Visits.setter
+    def Visits(self, val):
+        self._visits = val
 
     def addVisit(self, visit):
         bisect.insort_left(self._visits, visit)

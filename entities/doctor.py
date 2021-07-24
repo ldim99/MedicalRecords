@@ -1,6 +1,7 @@
 from . import person
 
 
+# Doctor Information
 class Doctor(person.Person):
     def __init__(self, name=None, dob=None, gender=None, title=None):
         super(Doctor, self).__init__(name, dob, gender)

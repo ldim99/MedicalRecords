@@ -1,0 +1,103 @@
+{
+  "Doctor": {
+    "Id": {
+      "c71eada3-dcd1-4eca-bf8f-5767c83d4c52": {
+        "CreationTime": "2021-07-24T02:41:38.130852",
+        "DateOfBirth": "1920-05-01",
+        "Gender": "M",
+        "Id": "c71eada3-dcd1-4eca-bf8f-5767c83d4c52",
+        "Name": "Dolittle",
+        "Title": "Dr",
+        "__type__": "entities.doctor.Doctor"
+      }
+    }
+  },
+  "Patient": {
+    "Id": {
+      "c616fe06-19bc-4d6b-8c69-6c352ea1381b": {
+        "Allergies": [],
+        "CreationTime": "2021-07-24T02:41:38.130852",
+        "DateOfBirth": "2010-01-01",
+        "DoctorId": "c71eada3-dcd1-4eca-bf8f-5767c83d4c52",
+        "Gender": "M",
+        "Height": 60,
+        "Id": "c616fe06-19bc-4d6b-8c69-6c352ea1381b",
+        "Medications": [],
+        "Name": "Buratino",
+        "Preconditions": [],
+        "Weight": 30,
+        "__type__": "entities.patient.Patient"
+      }
+    },
+    "Name": {
+      "Buratino": {
+        "Allergies": [],
+        "CreationTime": "2021-07-24T02:41:38.130852",
+        "DateOfBirth": "2010-01-01",
+        "DoctorId": "c71eada3-dcd1-4eca-bf8f-5767c83d4c52",
+        "Gender": "M",
+        "Height": 60,
+        "Id": "c616fe06-19bc-4d6b-8c69-6c352ea1381b",
+        "Medications": [],
+        "Name": "Buratino",
+        "Preconditions": [],
+        "Weight": 30,
+        "__type__": "entities.patient.Patient"
+      }
+    }
+  },
+  "PatientHistory": {
+    "Id": {
+      "4861c219-5b72-4f93-941b-33930f30d59e": {
+        "CreationTime": "2021-07-24T02:41:38.130852",
+        "Id": "4861c219-5b72-4f93-941b-33930f30d59e",
+        "PatientId": "c616fe06-19bc-4d6b-8c69-6c352ea1381b",
+        "Visits": [
+          {
+            "BloodPressure": [
+              80,
+              120
+            ],
+            "CreationTime": "2021-07-24T02:41:38.130852",
+            "Diagnosis": "Headaches",
+            "HeartRate": null,
+            "Height": 80,
+            "Id": "9965ac81-0578-4381-b57a-440fe59bfe1e",
+            "Notes": "Wooden head",
+            "PatientId": "c616fe06-19bc-4d6b-8c69-6c352ea1381b",
+            "Treatment": "Tyleon",
+            "Weight": 60,
+            "__type__": "entities.record.PatientVisit"
+          }
+        ],
+        "__type__": "entities.record.PatientHistory"
+      }
+    },
+    "PatientId": {
+      "c616fe06-19bc-4d6b-8c69-6c352ea1381b": {
+        "CreationTime": "2021-07-24T02:41:38.130852",
+        "Id": "4861c219-5b72-4f93-941b-33930f30d59e",
+        "PatientId": "c616fe06-19bc-4d6b-8c69-6c352ea1381b",
+        "Visits": [
+          {
+            "BloodPressure": [
+              80,
+              120
+            ],
+            "CreationTime": "2021-07-24T02:41:38.130852",
+            "Diagnosis": "Headaches",
+            "HeartRate": null,
+            "Height": 80,
+            "Id": "9965ac81-0578-4381-b57a-440fe59bfe1e",
+            "Notes": "Wooden head",
+            "PatientId": "c616fe06-19bc-4d6b-8c69-6c352ea1381b",
+            "Treatment": "Tyleon",
+            "Weight": 60,
+            "__type__": "entities.record.PatientVisit"
+          }
+        ],
+        "__type__": "entities.record.PatientHistory"
+      }
+    }
+  }
+}

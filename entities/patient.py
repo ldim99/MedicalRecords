@@ -1,6 +1,7 @@
 from . import person
 
 
+# Current Patient information
 class Patient(person.Person):
     def __init__(self, name=None, dob=None, gender=None, height=None, weight=None, doctor_id=None):
         super(Patient, self).__init__(name, dob, gender)
@@ -13,7 +14,7 @@ class Patient(person.Person):
 
     @property
     def Indexes(self):
-        return ['Id','Name']
+        return ['Id', 'Name']
 
     @property
     def Height(self):

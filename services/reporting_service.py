@@ -22,7 +22,8 @@ class ReportingService(services.service_gateway.Service):
         bloodPressures = list(zip(*[v.BloodPressure for v in visits]))
 
         meanBP = (statistics.mean(bloodPressures[0]), statistics.mean(bloodPressures[1])) if bloodPressures else []
-        medianBP = (statistics.median(bloodPressures[0]), statistics.median(bloodPressures[1])) if bloodPressures else []
+        medianBP = (
+        statistics.median(bloodPressures[0]), statistics.median(bloodPressures[1])) if bloodPressures else []
         maxBP = (max(bloodPressures[0]), max(bloodPressures[1])) if bloodPressures else []
 
         return '{patientInfo}\n' \

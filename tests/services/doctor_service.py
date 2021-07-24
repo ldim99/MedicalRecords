@@ -4,8 +4,8 @@ from entities import patient, doctor, record
 from services import service_gateway, entity_service, doctors_service, reporting_service
 
 
-class TestDoctorService(TestCase):
-    def testDoctorAPI(self):
+class DoctorServiceTest(TestCase):
+    def test_DoctorAPI(self):
         es = entity_service.EntityService(entity_service.DictionaryBackingStore())
         service_gateway.Registry.registerService(es)
         ds = service_gateway.Registry.lookupService('DoctorsService')
@@ -27,9 +27,3 @@ class TestDoctorService(TestCase):
 
         p2 = ds.findPatient(ctx, p.Id)
         self.assertIn('Milk', p2.Allergies)
-
-
-
-
-
-
