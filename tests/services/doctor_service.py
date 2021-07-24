@@ -11,12 +11,17 @@ class DoctorServiceTest(TestCase):
         ds = service_gateway.Registry.lookupService('DoctorsService')
 
         d = doctor.Doctor('Dolittle', datetime.date(1920, 5, 1), 'M', 'MD')
+        ctx = service_gateway.InvocationContext(d.Id)
+        es.store(ctx, d)
+
+        d1 = ds.findDoctor(ctx, d.Name)
+        self.assertEqual(d, d1)
+
         p = patient.Patient('Buratino', datetime.date(2010, 1, 1), 'M', 60, 30, d.Id)
         p.Preconditions = ['Made of wood']
         p.Allergies = ['Water']
         p.Medications = ['Read a book twice a day']
 
-        ctx = service_gateway.InvocationContext(d.Id)
         ds.createPatient(ctx, p)
 
         p1 = ds.findPatient(ctx, p.Id)

@@ -39,6 +39,7 @@ class EntityServiceTest(TestCase):
         visit = record.PatientVisit(p.Id)
         visit.Weight = 60
         visit.Height = 80
+        visit.HeartRate = 75
         visit.BloodPressure = (80, 120)
         visit.Diagnosis = 'Headaches'
         visit.Treatment = 'Tyleon'
@@ -57,15 +58,24 @@ class EntityServiceTest(TestCase):
         self.assertEqual(json1, json2)
 
     def test_Load(self):
-        with open('store.json') as f:
+        with open('../data/store.json') as f:
             json = f.read()
 
         self.bs.fromJSON(json)
 
+        ds = service_gateway.Registry.lookupService('DoctorsService')
         ps = service_gateway.Registry.lookupService('PatientsService')
-        pctx = service_gateway.InvocationContext('c616fe06-19bc-4d6b-8c69-6c352ea1381b')
-        p = ps.findPatient(pctx, 'Buratino')
-        self.assertIsNotNone(p)
 
-        hist = ps.findPatientHistory(pctx, p.Id)
-        self.assertIsNotNone(p)
+        dctx = service_gateway.InvocationContext(id(self))
+        d = ds.findDoctor(dctx, 'Dolittle')
+        self.assertIsNotNone(d)
+
+        dctx = service_gateway.InvocationContext(d.Id)
+
+        p1 = ps.findPatient(dctx, 'Buratino')
+        self.assertIsNotNone(p1)
+        p2 = ps.findPatient(dctx, 'Buratino')
+        self.assertIsNotNone(p2)
+
+        hist = ds.findPatientHistory(dctx, p1.Id)
+        self.assertIsNotNone(hist)

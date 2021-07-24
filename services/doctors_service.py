@@ -8,6 +8,11 @@ class DoctorsService(services.service_gateway.Service):
     def __init__(self):
         super(DoctorsService, self).__init__('Informational service for doctors')
 
+    def findDoctor(self, ctx, doctorName):
+        es = service_gateway.Registry.lookupService('EntityService')
+        doctor = es.lookup(ctx, 'Doctor', 'Name', doctorName)
+        return doctor
+
     def createPatient(self, ctx, patient):
         if patient and patient.DoctorId == ctx.UserId:
             es = service_gateway.Registry.lookupService('EntityService')

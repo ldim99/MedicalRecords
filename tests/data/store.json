@@ -1,0 +1,214 @@
+{
+  "Doctor": {
+    "Id": {
+      "5d4e73b2-90b5-47c7-93b2-4ece77fa3768": {
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "DateOfBirth": "1920-05-01",
+        "Gender": "M",
+        "Id": "5d4e73b2-90b5-47c7-93b2-4ece77fa3768",
+        "Name": "Dolittle",
+        "Title": "MD",
+        "__type__": "entities.doctor.Doctor"
+      }
+    },
+    "Name": {
+      "Dolittle": {
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "DateOfBirth": "1920-05-01",
+        "Gender": "M",
+        "Id": "5d4e73b2-90b5-47c7-93b2-4ece77fa3768",
+        "Name": "Dolittle",
+        "Title": "MD",
+        "__type__": "entities.doctor.Doctor"
+      }
+    }
+  },
+  "Patient": {
+    "Id": {
+      "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9": {
+        "Allergies": [
+          "Water"
+        ],
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "DateOfBirth": "2010-01-01",
+        "DoctorId": "5d4e73b2-90b5-47c7-93b2-4ece77fa3768",
+        "Gender": "M",
+        "Height": 60,
+        "Id": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
+        "Medications": [
+          "Read a book twice a day"
+        ],
+        "Name": "Buratino",
+        "Preconditions": [
+          "Made of wood"
+        ],
+        "Weight": 30,
+        "__type__": "entities.patient.Patient"
+      },
+      "f8c72ea2-90d7-47eb-a2e3-e94375f8656f": {
+        "Allergies": [
+          "Salad"
+        ],
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "DateOfBirth": "1940-01-01",
+        "DoctorId": "5d4e73b2-90b5-47c7-93b2-4ece77fa3768",
+        "Gender": "M",
+        "Height": 100,
+        "Id": "f8c72ea2-90d7-47eb-a2e3-e94375f8656f",
+        "Medications": [
+          "Drink juice and water"
+        ],
+        "Name": "Giuseppe ",
+        "Preconditions": [
+          "Heavy drinker"
+        ],
+        "Weight": 160,
+        "__type__": "entities.patient.Patient"
+      }
+    },
+    "Name": {
+      "Buratino": {
+        "Allergies": [
+          "Water"
+        ],
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "DateOfBirth": "2010-01-01",
+        "DoctorId": "5d4e73b2-90b5-47c7-93b2-4ece77fa3768",
+        "Gender": "M",
+        "Height": 60,
+        "Id": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
+        "Medications": [
+          "Read a book twice a day"
+        ],
+        "Name": "Buratino",
+        "Preconditions": [
+          "Made of wood"
+        ],
+        "Weight": 30,
+        "__type__": "entities.patient.Patient"
+      },
+      "Giuseppe ": {
+        "Allergies": [
+          "Salad"
+        ],
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "DateOfBirth": "1940-01-01",
+        "DoctorId": "5d4e73b2-90b5-47c7-93b2-4ece77fa3768",
+        "Gender": "M",
+        "Height": 100,
+        "Id": "f8c72ea2-90d7-47eb-a2e3-e94375f8656f",
+        "Medications": [
+          "Drink juice and water"
+        ],
+        "Name": "Giuseppe ",
+        "Preconditions": [
+          "Heavy drinker"
+        ],
+        "Weight": 160,
+        "__type__": "entities.patient.Patient"
+      }
+    }
+  },
+  "PatientHistory": {
+    "Id": {
+      "89b6fb0f-dcf1-46cf-9ff3-7a8611bb9f1f": {
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "Id": "89b6fb0f-dcf1-46cf-9ff3-7a8611bb9f1f",
+        "PatientId": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
+        "Visits": [
+          {
+            "BloodPressure": [
+              120,
+              80
+            ],
+            "CreationTime": "2021-07-23T05:19:12.201518",
+            "Diagnosis": "Headaches",
+            "HeartRate": 80,
+            "Height": 80,
+            "Id": "2cb1db67-353c-4598-b00e-ac78fe7b4259",
+            "Notes": "Wooden head",
+            "PatientId": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
+            "Treatment": "Tyleon",
+            "Weight": 60,
+            "__type__": "entities.record.PatientVisit"
+          }
+        ],
+        "__type__": "entities.record.PatientHistory"
+      },
+      "83cc8f96-cab1-4aad-a97d-b5b6fdd7907c": {
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "Id": "83cc8f96-cab1-4aad-a97d-b5b6fdd7907c",
+        "PatientId": "f8c72ea2-90d7-47eb-a2e3-e94375f8656f",
+        "Visits": [
+          {
+            "BloodPressure": [
+              115,
+              75
+            ],
+            "CreationTime": "2021-07-24T05:19:12.201518",
+            "Diagnosis": "Red Nose",
+            "HeartRate": 90,
+            "Height": 81,
+            "Id": "233de038-b8cc-4398-b4cb-07a954ab6414",
+            "Notes": "Too much drinking",
+            "PatientId": "f8c72ea2-90d7-47eb-a2e3-e94375f8656f",
+            "Treatment": "Milk",
+            "Weight": 65,
+            "__type__": "entities.record.PatientVisit"
+          }
+        ],
+        "__type__": "entities.record.PatientHistory"
+      }
+    },
+    "PatientId": {
+      "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9": {
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "Id": "89b6fb0f-dcf1-46cf-9ff3-7a8611bb9f1f",
+        "PatientId": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
+        "Visits": [
+          {
+            "BloodPressure": [
+              120,
+              80
+            ],
+            "CreationTime": "2021-07-23T05:19:12.201518",
+            "Diagnosis": "Headaches",
+            "HeartRate": 80,
+            "Height": 80,
+            "Id": "2cb1db67-353c-4598-b00e-ac78fe7b4259",
+            "Notes": "Wooden head",
+            "PatientId": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
+            "Treatment": "Tyleon",
+            "Weight": 60,
+            "__type__": "entities.record.PatientVisit"
+          }
+        ],
+        "__type__": "entities.record.PatientHistory"
+      },
+      "f8c72ea2-90d7-47eb-a2e3-e94375f8656f": {
+        "CreationTime": "2021-07-24T05:19:12.201518",
+        "Id": "83cc8f96-cab1-4aad-a97d-b5b6fdd7907c",
+        "PatientId": "f8c72ea2-90d7-47eb-a2e3-e94375f8656f",
+        "Visits": [
+          {
+            "BloodPressure": [
+              115,
+              75
+            ],
+            "CreationTime": "2021-07-24T05:19:12.201518",
+            "Diagnosis": "Red Nose",
+            "HeartRate": 90,
+            "Height": 81,
+            "Id": "233de038-b8cc-4398-b4cb-07a954ab6414",
+            "Notes": "Too much drinking",
+            "PatientId": "f8c72ea2-90d7-47eb-a2e3-e94375f8656f",
+            "Treatment": "Milk",
+            "Weight": 65,
+            "__type__": "entities.record.PatientVisit"
+          }
+        ],
+        "__type__": "entities.record.PatientHistory"
+      }
+    }
+  }
+}

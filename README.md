@@ -1,4 +1,4 @@
-##Medical Records Manager
+## Medical Records Manager
 
 Overall goal of this project is to provide interface for patients and doctors to be able manage medical records and history of visits as well as being able to generate reports
 
@@ -6,28 +6,28 @@ Project implemented as a set of microservices and entity classes represnting  do
 Patient records include basic patient information - name, date of birth, gender, height and weight as well as their pre-existing conditions, allergies and midications
 Visit records include doctor notes, diagnosis and prescriptions as well as measures taken during the visit - height, weight, blood pressure and heart rate
 
-Project implemented as a group of microservices with common registration and lookup interface:
+Project implemented as a group of externally facing microservices with common registration and lookup interface:
 
-1. Patient Service *:
+1. Patient Service:
   - browse patients information and medical history
   - update patients information
 
-2. Doctor Services *:
-   - browse patients information and medical history
-   - update patients information and medical history
+2. Doctor Services:
+  - browse patients information and medical history
+  - update patients information and medical history
 
-3. Reporting Service *:
-   - generates patient health summary with historical metrics - BMI, blood pressure, heart rate for a given range of dates
-   = list historical visits with corresponding metrics
+3. Reporting Service:
+  - generates patient health summary with historical metrics - BMI, blood pressure, heart rate for a given range of dates
+  - list historical visits with corresponding metrics
 
-* An implicit level of doctor/patient isolaton is guranteed when patients and doctors will only be able to browse and edit information that is relevant to them
+An implicit level of doctor/patient isolaton is guranteed when patients and doctors will only be able to browse and edit information that is relevant to them
 
-###System Design:
+### System Design:
 
-  Web/Mobile Client -> Load Balancer -> Web Server (Front End UI)
-                                     -> HTTP REST API -> Microservice Registry -> Microservices -> Cache -> Backing Store
-                                                            \                                                   /
-                                                             \ _____________ This implementation _____________ /
+      Web/Mobile Client -> Load Balancer -> Web Server (Front End UI)
+                                         -> HTTP REST API -> Microservice Registry -> Microservices -> Cache -> Backing Store
+                                                                \                                                   /
+                                                                 \ _____________ This implementation _____________ /
 
  Doctors and patients are using mobile/web browser to establish secure (SSL) connection with Web Server
  Web Server provides login screen and authenticates clients
@@ -41,17 +41,17 @@ Project implemented as a group of microservices with common registration and loo
  An asynchronous persistence to a backing NoSql store such as Cassandra or MongoDB hover
  A SQL store such as Postgres SQL can also be used however it will require object-relational mapping with higher maintenance costs
 
- ###Data Model:
+ ### Data Model:
 
      (inheritance indicated by arrows from children on the top toward ancestors on the bottom)
 
      Patient, Doctor       PatientVisit   PatientHistory
            \                    \           /
             Person              PatientRecord
-              \                   /
-                HistoricalRecord
+              \                     /
+                  HistoricalRecord
 
-###Service Model:
+### Service Model:
 
      All services as well as external REST endpoints are fully decoupled from each other and able to communicate with help of service gatweay
      which performs registration and resolution on behalf of services . Service Gateway is also an extension point allowing for load balancing and scaling
@@ -64,3 +64,22 @@ Project implemented as a group of microservices with common registration and loo
                               |
                          Backing Store
 
+### Project Outline:
+
+Top level directories:
+
+  \entities -  class definitions for Patient, Doctor, PatientVisit and PatientHistory
+  \services - service definitions for Patients, Doctors, Reporting and Entity services as well as ServiceGateway
+  \tests    - corresponding tests in the entities and services
+             \data\.json - sample data store in json format
+
+## Sample Usage:
+
+   Various usages exanples provided as part of the following tests:
+   tests/services/doctor_service.py - doctors creation and lookup by name
+                                    - patients creation and update by a given doctor
+
+   tests/services/patient_service.py - patients creation and lookup by id and name
+   tests/services/reporting_service.py - patients health summary generation for a given date range such as last 12 months
+   tests/services/entity_service.py - doctor and patient store and lookup, serialization into json and sample store load from  ../data/store.json
+   

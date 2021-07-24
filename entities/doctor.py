@@ -8,6 +8,10 @@ class Doctor(person.Person):
         self._title = title
 
     @property
+    def Indexes(self):
+        return ['Id', 'Name']
+
+    @property
     def Title(self):
         return self._title
 
