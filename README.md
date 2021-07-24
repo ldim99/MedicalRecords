@@ -8,15 +8,15 @@ Visit records include doctor notes, diagnosis and prescriptions as well as measu
 
 Project implemented as a group of externally facing microservices with common registration and lookup interface:
 
-1. Patient Service:
+Patient Service:
   - browse patients information and medical history
   - update patients information
 
-2. Doctor Services:
+Doctor Services:
   - browse patients information and medical history
   - update patients information and medical history
 
-3. Reporting Service:
+Reporting Service:
   - generates patient health summary with historical metrics - BMI, blood pressure, heart rate for a given range of dates
   - list historical visits with corresponding metrics
 
@@ -31,11 +31,15 @@ An implicit level of doctor/patient isolaton is guranteed when patients and doct
 
  Doctors and patients are using mobile/web browser to establish secure (SSL) connection with Web Server
  Web Server provides login screen and authenticates clients
+
+
  Once logged in clients are able to browse and update relevant information according to the specification by issuing HTTP requests to the web server
+
  Web Server lookups up corresponding services from the registry , invokes them , formats results and returns them back to clients
 
  In order to handle large number of http clients a load balancer is needed to route requests to the available web server / http REST endpoint
- Depending on the number of clients system can be distributed geographically with closest datacenters handling traffic for a given region
+ 
+Depending on the number of clients system can be distributed geographically with closest datacenters handling traffic for a given region
 
  An object cache such as Radis can be used to cache and share entities between various microsevices
  An asynchronous persistence to a backing NoSql store such as Cassandra or MongoDB hover
@@ -68,18 +72,23 @@ An implicit level of doctor/patient isolaton is guranteed when patients and doct
 
 Top level directories:
 
-  \entities -  class definitions for Patient, Doctor, PatientVisit and PatientHistory
-  \services - service definitions for Patients, Doctors, Reporting and Entity services as well as ServiceGateway
-  \tests    - corresponding tests in the entities and services
+  /entities -  class definitions for Patient, Doctor, PatientVisit and PatientHistory
+
+  /services - service definitions for Patients, Doctors, Reporting and Entity services as well as ServiceGateway
+
+  /tests    - corresponding tests in the entities and services
              \data\.json - sample data store in json format
 
 ## Sample Usage:
 
    Various usages exanples provided as part of the following tests:
-   tests/services/doctor_service.py - doctors creation and lookup by name
+   
+   /tests/services/doctor_service.py - doctors creation and lookup by name
                                     - patients creation and update by a given doctor
 
-   tests/services/patient_service.py - patients creation and lookup by id and name
-   tests/services/reporting_service.py - patients health summary generation for a given date range such as last 12 months
-   tests/services/entity_service.py - doctor and patient store and lookup, serialization into json and sample store load from  ../data/store.json
+   /tests/services/patient_service.py - patients creation and lookup by id and name
+
+   /tests/services/reporting_service.py - patients health summary generation for a given date range such as last 12 months
+
+   /tests/services/entity_service.py - doctor and patient store and lookup, serialization into json and sample store load from  ../data/store.json
    
