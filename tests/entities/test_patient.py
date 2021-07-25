@@ -14,4 +14,4 @@ class PatientTest(TestCase):
         self.assertTrue(p.Name in str(p))
 
         p1 = patient.Patient.fromJSON(p.toJSON())
-        self.assertEqual(p.toDict(), p1.toDict())
+        self.assertDictEqual(p.toDict(), p1.toDict())

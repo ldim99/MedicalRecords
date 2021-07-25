@@ -1,6 +1,6 @@
 from unittest import TestCase
 import datetime
-from entities import patient, doctor, record
+from entities import patient, doctor
 from services import service_gateway, entity_service, doctors_service, reporting_service
 
 

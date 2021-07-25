@@ -10,7 +10,7 @@ import json
 class EntityService(services.service_gateway.Service):
 
     def __init__(self, backingStore):
-        super(EntityService, self).__init__('Entity lookup service')
+        super(EntityService, self).__init__('Entity CRUD service')
         self._backingStore = backingStore
 
     @property

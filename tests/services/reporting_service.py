@@ -37,7 +37,7 @@ class ReportingServiceTest(TestCase):
         visit.BloodPressure = (120, 80)
         visit.HeartRate = 80
         visit.Diagnosis = 'Headaches'
-        visit.Treatment = 'Tyleon'
+        visit.Treatment = 'Tylenol'
         visit.Notes = 'Wooden head'
         history1.addVisit(visit)
 
@@ -58,13 +58,19 @@ class ReportingServiceTest(TestCase):
         ds.updatePatientHistory(ctx, history2)
 
         rs = service_gateway.Registry.lookupService('ReportingService')
-        s1 = rs.patientHealthSummary(ctx, p1.Id, datetime.datetime.utcnow() - datetime.timedelta(weeks=52),
-                                     datetime.datetime.utcnow())
+        visitSummary = rs.patientVisitSummary(ctx, p1.Id, datetime.datetime.utcnow() - datetime.timedelta(weeks=52),
+                                              datetime.datetime.utcnow())
 
-        s2 = rs.patientHealthSummary(ctx, p2.Id, datetime.datetime.utcnow() - datetime.timedelta(weeks=52),
-                                     datetime.datetime.utcnow())
-        print(s1, '\n')
-        print(s2)
+        self.assertIsNotNone(visitSummary)
 
-        self.assertIsNotNone(s1)
-        self.assertIsNotNone(s2)
+        healthSummary1 = rs.patientHealthSummary(ctx, p1.Id, datetime.datetime.utcnow() - datetime.timedelta(weeks=52),
+                                                 datetime.datetime.utcnow())
+
+        healthSummary2 = rs.patientHealthSummary(ctx, p2.Id, datetime.datetime.utcnow() - datetime.timedelta(weeks=52),
+                                                 datetime.datetime.utcnow())
+        print(healthSummary1, '\n')
+        print(healthSummary2)
+
+        self.assertIsNotNone(healthSummary1)
+        self.assertIsNotNone(healthSummary2)
+        self.assertNotEqual(healthSummary1, healthSummary2)

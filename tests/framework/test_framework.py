@@ -1,3 +1,6 @@
+# ## Integration test script for Medical Records Manager including patient , doctor and entity service registration,
+# mock data initialization, sample operations on patients and doctors services and health summary generation ##
+
 import logging
 import sys
 import getpass
@@ -18,10 +21,11 @@ ds = service_gateway.Registry.lookupService('DoctorsService')
 ps = service_gateway.Registry.lookupService('PatientsService')
 
 with open('../data/store.json') as f:
-    json = f.read()
+    jsonData = f.read()
 
+# initializing backing store with pre-loaded mock data
 log.info('Initializing json store from %s', f.name)
-es.BackingStore.fromJSON(json)
+es.BackingStore.fromJSON(jsonData)
 
 # Current user's security context to find specific doctor
 ctx = service_gateway.InvocationContext(getpass.getuser())
@@ -41,6 +45,7 @@ log.info('Looking up patient %s ...', pName)
 p = ps.findPatient(dctx, pName)
 log.info('Found patient: %s', p)
 
+# Generating health and visit summary from pre-loaded mock data
 log.info('Generating summary for %s for the last 12 months..,', pName)
 rs = service_gateway.Registry.lookupService('ReportingService')
 s = rs.patientHealthSummary(dctx, p.Id, datetime.datetime.utcnow() - datetime.timedelta(weeks=52),

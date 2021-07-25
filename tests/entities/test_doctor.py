@@ -13,3 +13,7 @@ class DoctorTest(TestCase):
     def test_repr(self):
         d = doctor.Doctor('Dolittle', datetime.date(1920, 5, 1), 'M', 'Dr')
         self.assertTrue(d.Name in str(d))
+
+        d1 = doctor.Doctor.fromJSON(d.toJSON())
+        self.assertDictEqual(d.toDict(), d1.toDict())
+

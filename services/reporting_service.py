@@ -4,10 +4,20 @@ import services.service_gateway
 from . import service_gateway
 
 
+# Provides report generation operations on behalf of patients and doctors
 class ReportingService(services.service_gateway.Service):
 
     def __init__(self):
         super(ReportingService, self).__init__('Reporting service for patients & doctors')
+
+    def patientVisitSummary(self, ctx, patientId, start, end):
+        es = service_gateway.Registry.lookupService('EntityService')
+        patient = es.lookup(ctx, 'Patient', 'Id', patientId)
+        if patient and ctx.UserId in (patientId, patient.DoctorId):
+            history = es.lookup(ctx, 'PatientHistory', 'PatientId', patientId)
+            visits = history.getVisits(start, end) if history else []
+            return '{visits}'.format(visits='\n'.join(map(lambda v: 'Visit %s' % v, visits)))
+        return None
 
     def patientHealthSummary(self, ctx, patientId, start, end):
         es = service_gateway.Registry.lookupService('EntityService')
@@ -15,9 +25,10 @@ class ReportingService(services.service_gateway.Service):
         if patient and ctx.UserId in (patientId, patient.DoctorId):
             doctor = es.lookup(ctx, 'Doctor', 'Id', patient.DoctorId)
             history = es.lookup(ctx, 'PatientHistory', 'PatientId', patientId)
-            return self._generateSummary(patient, doctor, history, start, end)
+            return self._generateHealthAndVisitSummary(patient, doctor, history, start, end)
+        return None
 
-    def _generateSummary(self, patient, doctor, history, start, end):
+    def _generateHealthAndVisitSummary(self, patient, doctor, history, start, end):
         visits = history.getVisits(start, end) if history else []
         bloodPressures = list(zip(*[v.BloodPressure for v in visits]))
 

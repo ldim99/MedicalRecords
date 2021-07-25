@@ -128,7 +128,7 @@
             "Id": "2cb1db67-353c-4598-b00e-ac78fe7b4259",
             "Notes": "Wooden head",
             "PatientId": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
-            "Treatment": "Tyleon",
+            "Treatment": "Tylenol",
             "Weight": 60,
             "__type__": "entities.record.PatientVisit"
           }
@@ -178,7 +178,7 @@
             "Id": "2cb1db67-353c-4598-b00e-ac78fe7b4259",
             "Notes": "Wooden head",
             "PatientId": "77fc4d0b-5221-40e5-a6dc-76e6b4dcf9c9",
-            "Treatment": "Tyleon",
+            "Treatment": "Tylenol",
             "Weight": 60,
             "__type__": "entities.record.PatientVisit"
           }

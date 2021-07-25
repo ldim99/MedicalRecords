@@ -61,13 +61,21 @@ class HistoricalRecord(object):
         return r
 
     def toJSON(self):
-        d = self.toDict()
-        return json.dumps(d)
+        class RecordEncoder(json.JSONEncoder):
+            def default(self, o):
+                return o.toDict()
 
+        return json.dumps(self, cls=RecordEncoder)
+        
     @classmethod
-    def fromJSON(cls, jsonText):
-        d = json.loads(jsonText)
-        return cls.fromDict(d)
+    def fromJSON(cls, jsonIn):
+        def object_hook(obj):
+            if '__type__' in obj:
+                obj = HistoricalRecord.fromDict(obj)
+            return obj
+
+        o = json.loads(jsonIn, object_hook=object_hook)
+        return o
 
 
 # Records for a given patient

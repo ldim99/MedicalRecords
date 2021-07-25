@@ -1,7 +1,8 @@
 ## Medical Records Manager
 
-Overall goal of this project is to provide interface for patients and doctors to be able to manage medical records,
-history of visits as well as being able to generate reports with doctors notes and aggregate health information
+Overall goal of this project is to provide programmatic interface for patients and doctors to view and manage medical
+records, history of visits and generate reports with patient summaries, doctors diagnostic and treatment information and
+aggregate health records
 
 Project implemented as a set of microservices and entity classes representing doctors, patients and visit records.
 Patient records include basic patient information - name, date of birth, gender, height and weight as well as their
@@ -70,17 +71,25 @@ typically results in higher maintenance costs.
 
 ### Service Model:
 
-     All services as well as external REST endpoints are fully decoupled from each other and able to communicate with the help of service gatweay
-     which performs registration and resolution on behalf of services. 
-     Service gateway captures invocation context containing invoking client id and makes it avaiiable in each service request which is used for performing permission checks   
-     Same invocation context is also made available for inter-service communicaitons enabling permission enforement throught invocaiton chain.   
-     Service Gateway is also an extension point allowing for load balancing and scaling
+     All services are fully decoupled and communicate with each other with the help of service gatweay which supports registration 
+     and lookup operations.
+     Service gateway captures invocation context containing invoking client id (either patients or doctors user id) and makes it avaiiable in each service request
+     Invocation context is also getting passed for inter-service invocations enabling permission enforement throught invocaiton chain.   
+     Service Gateway servers as  extension point for load balancing and scaling allowing for dynamic increase in the number of individual service instances
+
+     Entity service provides CRUD operations on entities such Doctors, Patients and PatiensVisits by delegating storage and retrival to the backing store that its preconfigured with 
+     Entity service ensures that Locking is performed at the entity level to avoid concurrent modifications during updates
+
+     Doctor and Patient services perfom find, lookup and modications operations on behalf of doctors and patiens respectively while ensureing proper access control
+
+     Reporting Service generates reports which include patient records, visit history, diagnostic and treatment information and historical health summaries 
+     such as blood pressue, heart rate and BMI. Reporting service also ensures that only patient and his/her doctor are able to generate reports for a given patient
 
                         Reporting Service
                               |
      Patient Service ---- Service Gateway ---- Doctor Service
                               |
-                         Entity Service
+                         Entity Service  
                               |
                          Backing Store
 
@@ -92,7 +101,7 @@ Top level directories:
 
 /services - service definitions for Patients, Doctors, Reporting and Entity services as well as ServiceGateway
 
-/tests - corresponding tests in the entities and services /data/store.json - sample data store in json format
+/tests - unit and integration tests for entities and services as well as same data store in json format /data/store.json
 
 ## Sample Usage:
 
@@ -107,4 +116,4 @@ from ../data/store.json
 
 /tests/services/reporting_service.py - patients health summary generation for a given date range such as last 12 months
 
-/tests/framework/test_framework.py - integration test demonstrating general framework usage
+/tests/framework/test_framework.py - integration test demonstrating initialization and framework usage
