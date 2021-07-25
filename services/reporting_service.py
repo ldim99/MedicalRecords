@@ -23,17 +23,17 @@ class ReportingService(services.service_gateway.Service):
 
         meanBP = (statistics.mean(bloodPressures[0]), statistics.mean(bloodPressures[1])) if bloodPressures else []
         medianBP = (
-        statistics.median(bloodPressures[0]), statistics.median(bloodPressures[1])) if bloodPressures else []
+            statistics.median(bloodPressures[0]), statistics.median(bloodPressures[1])) if bloodPressures else []
         maxBP = (max(bloodPressures[0]), max(bloodPressures[1])) if bloodPressures else []
 
         return '{patientInfo}\n' \
                'Doctor: {doctorInfo}\n' \
-               'Blood Pressure: mean: {meanBP} median: {medianBP} max: {maxBP}\n' \
+               'Blood Pressure: mean: {meanBP} median: {medianBP} max: {maxBP}\n\n' \
                '{visits}'.format(patientInfo=patient,
                                  doctorInfo=doctor,
                                  meanBP='/'.join(map(str, meanBP)), medianBP='/'.join(map(str, medianBP)),
                                  maxBP='/'.join(map(str, maxBP)),
-                                 visits='\n'.join(map(str, visits)))
+                                 visits='\n'.join(map(lambda v: 'Visit %s' % v, visits)))
 
 
 service_gateway.Registry.registerService(ReportingService())

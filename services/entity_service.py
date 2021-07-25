@@ -13,6 +13,10 @@ class EntityService(services.service_gateway.Service):
         super(EntityService, self).__init__('Entity lookup service')
         self._backingStore = backingStore
 
+    @property
+    def BackingStore(self):
+        return self._backingStore
+
     def lookup(self, ctx, entityClass, index, entityKey):
         return self._backingStore.lookupByIndex(entityClass, index, entityKey)
 

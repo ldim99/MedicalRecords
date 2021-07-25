@@ -1,4 +1,3 @@
-import json
 from unittest import TestCase
 import datetime
 from entities import patient, doctor, record
