@@ -1,4 +1,3 @@
-import services.service_gateway
 from entities import record
 from . import service_gateway
 from collections import defaultdict
@@ -7,7 +6,7 @@ import json
 
 
 # Entity persistance and lookup service with pluggable backing store
-class EntityService(services.service_gateway.Service):
+class EntityService(service_gateway.Service):
 
     def __init__(self, backingStore):
         super(EntityService, self).__init__('Entity CRUD service')

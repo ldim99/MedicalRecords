@@ -1,9 +1,8 @@
-import services.service_gateway
 from . import service_gateway
 
 
 # Provides operations on behalf of doctors
-class DoctorsService(services.service_gateway.Service):
+class DoctorsService(service_gateway.Service):
 
     def __init__(self):
         super(DoctorsService, self).__init__('Informational service for doctors')

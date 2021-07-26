@@ -1,11 +1,10 @@
 import statistics
 
-import services.service_gateway
 from . import service_gateway
 
 
 # Provides report generation operations on behalf of patients and doctors
-class ReportingService(services.service_gateway.Service):
+class ReportingService(service_gateway.Service):
 
     def __init__(self):
         super(ReportingService, self).__init__('Reporting service for patients & doctors')

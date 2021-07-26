@@ -74,7 +74,7 @@ Inheritance in Type hierarchy indicated by arrows from children toward the top t
 
 ### Service Model:
 
-Services should be fully decoupled from each other and communicate with the help of service gatweay which should support
+Services should be fully decoupled from each other and communicate with the help of service gateway which should support
 registration and resolution operations.
 
 Service gateway captures invocation context containing client id (either patients or doctors user id) and makes it

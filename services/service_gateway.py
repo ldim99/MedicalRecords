@@ -1,3 +1,4 @@
+# Service Registry
 class Registry(object):
     _services = {}
 
@@ -10,6 +11,7 @@ class Registry(object):
         return cls._services.get(serviceId)
 
 
+# Service Interface/Abstract base class
 class Service(object):
     def __init__(self, description):
         self._id = self.__class__.__name__
@@ -24,6 +26,7 @@ class Service(object):
         return self._id
 
 
+# Context capturing invoking user id and other relevant information
 class InvocationContext(object):
     def __init__(self, userId):
         self._user_id = userId

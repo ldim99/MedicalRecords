@@ -1,7 +1,7 @@
 from . import person
 
 
-# Current Patient information
+# Patient information
 class Patient(person.Person):
     def __init__(self, name=None, dob=None, gender=None, height=None, weight=None, doctor_id=None):
         super(Patient, self).__init__(name, dob, gender)
