@@ -4,8 +4,9 @@ from entities import patient, doctor, record
 from services import service_gateway, entity_service, doctors_service, reporting_service
 
 
+# Tests for reporting service API
 class ReportingServiceTest(TestCase):
-    def test_PatientSummary(self):
+    def test_patientSummary(self):
         es = entity_service.EntityService(entity_service.DictionaryBackingStore())
         service_gateway.Registry.registerService(es)
         ds = service_gateway.Registry.lookupService('DoctorsService')

@@ -4,13 +4,14 @@ from entities import patient, doctor, record
 from services import entity_service, service_gateway, doctors_service, patients_service
 
 
+# Tests for entity service API
 class EntityServiceTest(TestCase):
     def setUp(self):
         self.bs = entity_service.DictionaryBackingStore()
         self.es = entity_service.EntityService(self.bs)
         service_gateway.Registry.registerService(self.es)
 
-    def test_Lookup(self):
+    def test_lookup(self):
         p = patient.Patient('Buratino', datetime.date(2010, 1, 1), 'M', 60, 30, 0)
         d = doctor.Doctor('Dolittle', datetime.date(1920, 5, 1), 'M', 'Dr')
 
@@ -24,7 +25,7 @@ class EntityServiceTest(TestCase):
         d1 = self.es.lookup(ctx, 'Doctor', 'Id', d.Id)
         self.assertEqual(d, d1)
 
-    def test_Store(self):
+    def test_store(self):
         d = doctor.Doctor('Dolittle', datetime.date(1920, 5, 1), 'M', 'Dr')
         p = patient.Patient('Buratino', datetime.date(2010, 1, 1), 'M', 60, 30, d.Id)
 
